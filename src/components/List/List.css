@@ -29,26 +29,45 @@
 }
 
 .list-name {
-  background-color: lightblue;
+  background-color: #d3e5ef;
   padding: 0 5px;
   border-radius: 2px;
+  max-width: 10rem;
+  overflow: hidden;
+}
+
+.list-name.Red {
+  background-color: #ffe2dd;
+}
+
+.list-name.Green {
+  background-color: #dbeddb;
 }
 
 .list-card-count {
   color: gray;
 }
 
-.list-btn {
+.list-action-btns {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.list-btn {
   border-width: 0;
   background-color: transparent;
   font-size: 1.1rem;
   font-weight: 800;
   color: gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
+}
+
+.list-btn:nth-of-type(1) {
+  position: absolute;
+  top: -4px;
+  right: 20px;
 }
 
 .list-new-card-btn {

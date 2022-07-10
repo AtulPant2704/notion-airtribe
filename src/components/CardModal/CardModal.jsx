@@ -30,14 +30,14 @@ const CardModal = ({
       ></div>
       <div className="card-modal">
         <div className="card-header">
-          <input
+          <textarea
             name="title"
             className={`card-modal-title ${
               title === "Untitled" ? "card-modal-invalid-title" : ""
             }`}
             value={newCard.title}
             onChange={inputHandler}
-          ></input>
+          ></textarea>
           <label htmlFor="card-status">Status</label>
           <select
             id="card-status"
@@ -64,6 +64,7 @@ const CardModal = ({
         ></textarea>
         <div className="card-footer">
           <button
+            className="card-modal-btn solid-btn"
             onClick={() =>
               dispatch({
                 type: "EDIT_CARD",
@@ -78,6 +79,7 @@ const CardModal = ({
             Save
           </button>
           <button
+            className="card-modal-btn outline-btn"
             onClick={() =>
               dispatch({
                 type: "DELETE_CARD",

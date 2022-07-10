@@ -1,69 +1,92 @@
 import { useState } from "react";
 import { useData } from "context";
-import { Card } from "components";
+import { Card, ListPopover } from "components";
 import "./List.css";
-import { ListPopover } from "components/ListPopover/ListPopover";
-import { useEffect } from "react";
 
 const List = ({
   id,
   name,
+  color,
   cards,
   listIndex,
   dragItemIndex,
   setDragItemIndex,
+  displayListPopover,
+  setDisplayListPopover,
 }) => {
-  const { state, dispatch } = useData();
-  const [displayCardInput, setDisplayCardInput] = useState(false);
+  const { dispatch } = useData();
+  const [bottomCardInput, setBottomCardInput] = useState(false);
+  const [topCardInput, setTopCardInput] = useState(false);
   const [cardName, setCardName] = useState("");
-  const [displayListPopover, setDisplayListPopover] = useState(false);
 
-  const addNewCard = () => {
-    dispatch({ type: "ADD_NEW_CARD", payload: { id, cardName } });
-    setDisplayCardInput(false);
+  const addNewCard = (location) => {
+    dispatch({ type: "ADD_NEW_CARD", payload: { id, cardName, location } });
+    setBottomCardInput(false);
+    setTopCardInput(false);
     setCardName("");
   };
 
-  const cardInputHandler = (e) => {
+  const cardInputHandler = (e, location) => {
     if (e.key === "Enter") {
-      addNewCard();
+      addNewCard(location);
     }
   };
 
-  useEffect(() => {
-    setDisplayListPopover(false);
-  }, [state]);
-
   return (
     <>
-      <div
-        className="list"
-        onDragEnter={() =>
-          !cards.length
-            ? dispatch({
-                type: "DRAG_AND_DROP",
-                payload: {
-                  dragItemIndex,
-                  dropItemIndex: { listIndex, cardIndex: 0 },
-                },
-              })
-            : null
-        }
-      >
-        <div className="list-heading">
+      <div className="list">
+        <div
+          className="list-heading"
+          onDragEnter={() =>
+            !cards.length
+              ? dispatch({
+                  type: "DRAG_AND_DROP",
+                  payload: {
+                    dragItemIndex,
+                    dropItemIndex: { listIndex, cardIndex: 0 },
+                  },
+                })
+              : null
+          }
+        >
           <div className="list-intro">
-            <p className="list-name">{name}</p>
+            <p className={`list-name ${color}`}>{name}</p>
             <p className="list-card-count">{cards.length}</p>
           </div>
-          <button
-            className="list-btn"
-            onClick={() => setDisplayListPopover(!displayListPopover)}
-          >
-            ...
-          </button>
-          {displayListPopover ? <ListPopover listId={id} /> : null}
+          <div className="list-action-btns">
+            <button
+              className="list-btn"
+              onClick={() =>
+                displayListPopover === id
+                  ? setDisplayListPopover("")
+                  : setDisplayListPopover(id)
+              }
+            >
+              ...
+            </button>
+            <button className="list-btn" onClick={() => setTopCardInput(true)}>
+              +
+            </button>
+          </div>
+          {displayListPopover === id ? (
+            <ListPopover
+              listId={id}
+              setDisplayListPopover={setDisplayListPopover}
+            />
+          ) : null}
         </div>
         <div className="list-body">
+          {topCardInput ? (
+            <input
+              className="card-input"
+              placeholder="Type a name..."
+              autoFocus
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+              onKeyDown={(e) => cardInputHandler(e, "top")}
+              onBlur={() => addNewCard("top")}
+            />
+          ) : null}
           {cards?.map((card, index) => (
             <Card
               id={card.id}
@@ -77,20 +100,20 @@ const List = ({
           ))}
         </div>
         <div className="list-footer">
-          {displayCardInput ? (
+          {bottomCardInput ? (
             <input
               className="card-input"
               placeholder="Type a name..."
               autoFocus
               value={cardName}
               onChange={(e) => setCardName(e.target.value)}
-              onKeyDown={cardInputHandler}
-              onBlur={addNewCard}
+              onKeyDown={(e) => cardInputHandler(e, "bottom")}
+              onBlur={() => addNewCard("bottom")}
             />
           ) : null}
           <button
             className="list-new-card-btn"
-            onClick={() => setDisplayCardInput(true)}
+            onClick={() => setBottomCardInput(true)}
           >
             + New
           </button>

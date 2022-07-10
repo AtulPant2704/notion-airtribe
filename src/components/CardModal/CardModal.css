@@ -13,8 +13,8 @@
 
 .card-modal {
   position: fixed;
-  height: fit-content;
-  max-height: 80%;
+  height: max-content;
+  max-height: 90%;
   width: 60%;
   background-color: white;
   top: 50%;
@@ -24,6 +24,7 @@
   padding: 1rem 2rem;
   overflow-x: hidden;
   overflow-y: auto;
+  border-radius: 5px;
 }
 
 .card-modal-title {
@@ -32,6 +33,8 @@
   font-weight: 800;
   display: block;
   outline: none;
+  width: 100%;
+  resize: none;
 }
 
 .card-modal-invalid-title {
@@ -41,6 +44,7 @@
 .card-status-select {
   margin-top: 1rem;
   margin-left: 1rem;
+  border: 0.5px solid black;
 }
 
 .card-description {
@@ -54,5 +58,25 @@
 .card-footer {
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
   margin-top: 1rem;
+}
+
+.card-modal-btn {
+  border-width: 0;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.solid-btn {
+  background-color: royalblue;
+  color: white;
+}
+
+.outline-btn {
+  color: royalblue;
+  border: 1px solid royalblue;
+  background-color: white;
 }

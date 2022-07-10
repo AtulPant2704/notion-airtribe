@@ -1,4 +1,6 @@
 .card-title {
+  width: 15rem;
+  word-wrap: break-word;
   background-color: white;
   font-size: 0.9rem;
   font-weight: 700;

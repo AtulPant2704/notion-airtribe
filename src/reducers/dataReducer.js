@@ -5,13 +5,14 @@ import {
   dragAndDropHandler,
   deleteListHandler,
   addListHandler,
+  listColorHandler,
 } from "utils";
 
 const dataReducer = (state, action) => {
   switch (action.type) {
     case "ADD_NEW_CARD": {
-      const { id, cardName } = action.payload;
-      return addCardHandler(state, id, cardName);
+      const { id, cardName, location } = action.payload;
+      return addCardHandler(state, id, cardName, location);
     }
     case "EDIT_CARD": {
       const { listId, cardId, cardData } = action.payload;
@@ -32,6 +33,10 @@ const dataReducer = (state, action) => {
     case "ADD_NEW_LIST": {
       const { listName } = action.payload;
       return addListHandler(state, listName);
+    }
+    case "CHANGE_LIST_COLOR": {
+      const { listId, color } = action.payload;
+      return listColorHandler(state, listId, color);
     }
     default:
       return state;

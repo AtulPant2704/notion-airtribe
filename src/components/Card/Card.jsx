@@ -46,8 +46,6 @@ const Card = ({
     }
   };
 
-  const list = state.find((item) => item.id === listId);
-
   useEffect(() => {
     setDisplayCardModal(false);
   }, [state]);
@@ -73,7 +71,7 @@ const Card = ({
         onClick={() => setDisplayCardModal(true)}
         onDragStart={dragStartHandler}
         onDragEnd={dragEndHandler}
-        onDragEnter={list.cards.length ? dragEnterHandler : null}
+        onDragEnter={dragEnterHandler}
       >
         {title}
       </p>

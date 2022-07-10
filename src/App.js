@@ -7,9 +7,14 @@ function App() {
   const { state } = useData();
   const [dragItemIndex, setDragItemIndex] = useState(null);
   const [displayListModal, setDisplayListModal] = useState(false);
+  const [displayListPopover, setDisplayListPopover] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(state));
+  }, [state]);
+
+  useEffect(() => {
+    setDisplayListPopover("");
   }, [state]);
 
   return (
@@ -21,6 +26,8 @@ function App() {
           listIndex={index}
           dragItemIndex={dragItemIndex}
           setDragItemIndex={setDragItemIndex}
+          displayListPopover={displayListPopover}
+          setDisplayListPopover={setDisplayListPopover}
         />
       ))}
 
